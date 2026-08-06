@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Futures 2026 | Workforce Intelligence Report</title>
+
+    <meta name="description" content="Engineering Futures is an interactive workforce intelligence report exploring engineering skill gaps, emerging technologies, and future-ready learning pathways across Asia-Pacific.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script defer src="js/app.js"></script>
+    <script defer src="js/charts.js"></script>
+</head>
+
+<body>
+
+<div class="background-gradient"></div>
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-circle"></span>
+
+        <h2>Engineering Futures</h2>
+
+    </div>
+
+    <nav>
+
+        <a href="#summary">Summary</a>
+
+        <a href="#countries">Countries</a>
+
+        <a href="#engineering">Engineering</a>
+
+        <a href="#recommendation">Recommendations</a>
+
+        <a href="#methodology">Methodology</a>
+
+        <a href="#about">About</a>
+
+    </nav>
+
+</header>
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="edition">
+
+            Edition 2026
+
+        </span>
+
+        <h1>
+
+            Engineering Futures
+
+        </h1>
+
+        <h3>
+
+            Bridging Indonesia's Engineering Skills Gap Through Workforce Intelligence
+
+        </h3>
+
+        <p>
+
+            An interactive report analyzing engineering capability gaps,
+            emerging technologies, and future-ready learning pathways across
+            Asia-Pacific and leading global engineering ecosystems.
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#summary" class="btn-primary">
+
+                Explore Report
+
+            </a>
+
+            <a href="#methodology" class="btn-secondary">
+
+                Methodology
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="floating-card card-blue">
+
+            <span>Countries</span>
+
+            <h2>9</h2>
+
+        </div>
+
+        <div class="floating-card card-red">
+
+            <span>Engineering Fields</span>
+
+            <h2>8</h2>
+
+        </div>
+
+        <div class="floating-card card-yellow">
+
+            <span>Emerging Skills</span>
+
+            <h2>120+</h2>
+
+        </div>
+
+        <div class="floating-card card-green">
+
+            <span>Research Sources</span>
+
+            <h2>7</h2>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="summary" class="section">
+
+    <div class="section-title">
+
+        <span>Executive Summary</span>
+
+        <h2>Engineering Workforce at a Glance</h2>
+
+    </div>
+
+    <div class="summary-grid">
+
+        <article class="summary-card">
+
+            <h3 id="counter-skills">72%</h3>
+
+            <p>
+
+                Skills expected to change before 2030 according to global workforce trends.
+
+            </p>
+
+        </article>
+
+        <article class="summary-card">
+
+            <h3 id="counter-ai">AI</h3>
+
+            <p>
+
+                Artificial Intelligence continues to be one of the fastest-growing capability areas across engineering disciplines.
+
+            </p>
+
+        </article>
+
+        <article class="summary-card">
+
+            <h3 id="counter-engineers">8</h3>
+
+            <p>
+
+                Engineering disciplines included in this workforce intelligence report.
+
+            </p>
+
+        </article>
+
+        <article class="summary-card">
+
+            <h3 id="counter-countries">9</h3>
+
+            <p>
+
+                Countries compared based on engineering ecosystems, digital maturity, and emerging skills.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+<section id="countries" class="section">
+
+    <div class="section-title">
+
+        <span>Global Comparison</span>
+
+        <h2>Engineering Ecosystems</h2>
+
+    </div>
+
+    <div class="country-selector">
+
+        <button class="country active">🇮🇩 Indonesia</button>
+
+        <button class="country">🇸🇬 Singapore</button>
+
+        <button class="country">🇮🇳 India</button>
+
+        <button class="country">🇯🇵 Japan</button>
+
+        <button class="country">🇺🇸 United States</button>
+
+        <button class="country">🇩🇪 Germany</button>
+
+        <button class="country">🇰🇷 South Korea</button>
+
+        <button class="country">🇲🇾 Malaysia</button>
+
+        <button class="country">🇹🇭 Thailand</button>
+
+    </div>
+
+    <div class="chart-card">
+
+        <canvas id="countryRadarChart"></canvas>
+
+    </div>
+
+</section>
