@@ -1,0 +1,566 @@
+{
+  "metadata": {
+    "dataset": "Engineering Futures Country Comparison",
+    "version": "1.0.0",
+    "lastUpdated": "2026-08-09",
+    "purpose": "Country-level engineering workforce and future-skills comparison",
+    "note": "Values marked as illustrative must not be presented as official measurements. Replace with verified source observations before publication.",
+    "countries": 9
+  },
+
+  "sources": {
+    "linkedin_economic_graph": {
+      "name": "LinkedIn Economic Graph",
+      "organization": "LinkedIn",
+      "type": "workforce_data",
+      "url": "https://economicgraph.linkedin.com/",
+      "relevance": "Skills, workforce transitions, hiring and talent trends"
+    },
+
+    "wef_future_jobs": {
+      "name": "Future of Jobs Report",
+      "organization": "World Economic Forum",
+      "type": "workforce_forecast",
+      "url": "https://www.weforum.org/publications/the-future-of-jobs-report-2025/",
+      "relevance": "Emerging skills, declining skills and workforce transformation"
+    },
+
+    "unesco_engineering": {
+      "name": "UNESCO Institute for Statistics",
+      "organization": "UNESCO",
+      "type": "education_statistics",
+      "url": "https://uis.unesco.org/",
+      "relevance": "Engineering education and STEM indicators"
+    },
+
+    "oecd_skills": {
+      "name": "OECD Skills Outlook",
+      "organization": "OECD",
+      "type": "skills_statistics",
+      "url": "https://www.oecd.org/skills/",
+      "relevance": "Skills, adult learning and workforce capability"
+    },
+
+    "github_octoverse": {
+      "name": "GitHub Octoverse",
+      "organization": "GitHub",
+      "type": "developer_ecosystem",
+      "url": "https://octoverse.github.com/",
+      "relevance": "Software development and open-source technology trends"
+    },
+
+    "stackoverflow_survey": {
+      "name": "Stack Overflow Developer Survey",
+      "organization": "Stack Overflow",
+      "type": "developer_survey",
+      "url": "https://survey.stackoverflow.co/",
+      "relevance": "Developer tools, technologies and learning trends"
+    },
+
+    "ieee_trends": {
+      "name": "IEEE Technology Trends",
+      "organization": "IEEE",
+      "type": "technology_trends",
+      "url": "https://www.ieee.org/",
+      "relevance": "Technology and engineering trend signals"
+    }
+  },
+
+  "countries": {
+
+    "ID": {
+      "name": "Indonesia",
+      "flag": "🇮🇩",
+      "region": "Southeast Asia",
+      "incomeGroup": "Upper-middle income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "High",
+        "status": "Needs evidence-based assessment"
+      }
+    },
+
+
+    "SG": {
+      "name": "Singapore",
+      "flag": "🇸🇬",
+      "region": "Southeast Asia",
+      "incomeGroup": "High income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Benchmark",
+        "status": "Benchmark country"
+      }
+    },
+
+
+    "IN": {
+      "name": "India",
+      "flag": "🇮🇳",
+      "region": "South Asia",
+      "incomeGroup": "Lower-middle income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "JP": {
+      "name": "Japan",
+      "flag": "🇯🇵",
+      "region": "East Asia",
+      "incomeGroup": "High income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "US": {
+      "name": "United States",
+      "flag": "🇺🇸",
+      "region": "North America",
+      "incomeGroup": "High income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "DE": {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "region": "Europe",
+      "incomeGroup": "High income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "KR": {
+      "name": "South Korea",
+      "flag": "🇰🇷",
+      "region": "East Asia",
+      "incomeGroup": "High income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "MY": {
+      "name": "Malaysia",
+      "flag": "🇲🇾",
+      "region": "Southeast Asia",
+      "incomeGroup": "Upper-middle income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    },
+
+
+    "TH": {
+      "name": "Thailand",
+      "flag": "🇹🇭",
+      "region": "Southeast Asia",
+      "incomeGroup": "Upper-middle income",
+
+      "workforce": {
+        "engineeringDemand": null,
+        "digitalTalentDemand": null,
+        "stemTalentGrowth": null,
+        "skillsTransitionPressure": null
+      },
+
+      "skills": {
+        "digital": null,
+        "ai": null,
+        "cloud": null,
+        "data": null,
+        "cybersecurity": null,
+        "automation": null,
+        "sustainability": null,
+        "systemsThinking": null
+      },
+
+      "futureSkills": {
+        "aiLiteracy": null,
+        "analyticalThinking": null,
+        "technologicalLiteracy": null,
+        "creativeThinking": null,
+        "resilience": null,
+        "leadership": null,
+        "environmentalStewardship": null
+      },
+
+      "education": {
+        "engineeringGraduates": null,
+        "stemGraduates": null,
+        "tertiaryParticipation": null
+      },
+
+      "digitalTransformation": {
+        "aiAdoption": null,
+        "cloudAdoption": null,
+        "automationAdoption": null,
+        "advancedTechnologyAdoption": null
+      },
+
+      "assessment": {
+        "overallReadiness": null,
+        "priority": "Comparator",
+        "status": "Comparator country"
+      }
+    }
+
+  }
+}
