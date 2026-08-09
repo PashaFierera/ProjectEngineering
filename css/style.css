@@ -1,0 +1,1014 @@
+/* =========================================================
+   ENGINEERING FUTURES 2026
+   Global Design System
+   ========================================================= */
+
+/* =========================================================
+   01. DESIGN TOKENS
+   ========================================================= */
+
+:root {
+    /* Brand palette */
+    --blue: #293379;
+    --red: #b81817;
+    --yellow: #e5a300;
+    --lettuce: #a6af32;
+    --green: #607829;
+    --orange: #ee7302;
+
+    /* Extended palette */
+    --blue-light: #5963a8;
+    --blue-dark: #1c2358;
+
+    --red-light: #d94a48;
+    --red-dark: #7f100f;
+
+    --yellow-light: #f2c34d;
+    --yellow-dark: #9b6e00;
+
+    --green-light: #899d50;
+    --green-dark: #3d501a;
+
+    --orange-light: #ff9b45;
+    --orange-dark: #a94d00;
+
+    /* Background */
+    --background: #0b0d13;
+    --background-soft: #10131c;
+    --background-elevated: #151925;
+
+    --surface: rgba(255, 255, 255, 0.055);
+    --surface-hover: rgba(255, 255, 255, 0.085);
+    --surface-solid: #181c27;
+
+    /* Typography */
+    --text-primary: #f7f7f4;
+    --text-secondary: #c7c9d1;
+    --text-muted: #858995;
+    --text-dark: #151515;
+
+    /* Borders */
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.16);
+
+    /* Shadows */
+    --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 12px 40px rgba(0, 0, 0, 0.28);
+    --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.42);
+
+    /* Layout */
+    --container: 1240px;
+    --section-padding: clamp(80px, 10vw, 150px);
+
+    /* Radius */
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --radius-xl: 40px;
+
+    /* Transitions */
+    --transition-fast: 180ms ease;
+    --transition: 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-slow: 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+/* =========================================================
+   02. RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(41, 51, 121, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(238, 115, 2, 0.09),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 70% 80%,
+            rgba(96, 120, 41, 0.08),
+            transparent 25%
+        ),
+        var(--background);
+
+    color: var(--text-primary);
+
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+body::selection {
+    background: var(--yellow);
+    color: var(--text-dark);
+}
+
+img,
+svg,
+canvas {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    border: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   03. GLOBAL BACKGROUND EFFECT
+   ========================================================= */
+
+.background-gradient {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    overflow: hidden;
+}
+
+.background-gradient::before,
+.background-gradient::after {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    opacity: 0.13;
+
+    animation: floatingBlob 16s ease-in-out infinite alternate;
+}
+
+.background-gradient::before {
+    top: -180px;
+    left: -150px;
+
+    background: var(--blue);
+}
+
+.background-gradient::after {
+    right: -180px;
+    bottom: -150px;
+
+    background: var(--orange);
+
+    animation-delay: -7s;
+}
+
+@keyframes floatingBlob {
+
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(40px, 30px, 0) scale(1.08);
+    }
+
+    100% {
+        transform: translate3d(-30px, 60px, 0) scale(0.94);
+    }
+}
+
+
+/* =========================================================
+   04. TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family:
+        "Space Grotesk",
+        "Inter",
+        sans-serif;
+
+    line-height: 1.08;
+
+    letter-spacing: -0.035em;
+}
+
+h1 {
+    font-size: clamp(4rem, 9vw, 8.5rem);
+
+    font-weight: 700;
+}
+
+h2 {
+    font-size: clamp(2.4rem, 5vw, 4.8rem);
+
+    font-weight: 700;
+}
+
+h3 {
+    font-size: clamp(1.35rem, 2vw, 2rem);
+
+    font-weight: 600;
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+strong {
+    color: var(--text-primary);
+}
+
+
+/* =========================================================
+   05. CONTAINER
+   ========================================================= */
+
+.section,
+.hero {
+    width: min(
+        calc(100% - 48px),
+        var(--container)
+    );
+
+    margin-inline: auto;
+}
+
+
+/* =========================================================
+   06. NAVIGATION
+   ========================================================= */
+
+.navbar {
+    position: fixed;
+
+    top: 16px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(
+        calc(100% - 32px),
+        1180px
+    );
+
+    min-height: 68px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 10px 14px 10px 20px;
+
+    z-index: 1000;
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    background:
+        rgba(11, 13, 19, 0.72);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.22);
+
+    transition:
+        background var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition);
+}
+
+.navbar.scrolled {
+    background:
+        rgba(11, 13, 19, 0.92);
+
+    border-color: var(--border-strong);
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Logo */
+
+.logo {
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    white-space: nowrap;
+}
+
+.logo h2 {
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size: 1rem;
+
+    letter-spacing: -0.02em;
+
+    font-weight: 700;
+}
+
+.logo-circle {
+    position: relative;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            var(--blue),
+            var(--yellow),
+            var(--orange),
+            var(--red),
+            var(--blue)
+        );
+
+    animation:
+        logoSpin 8s linear infinite;
+}
+
+.logo-circle::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 5px;
+
+    border-radius: 50%;
+
+    background: var(--background);
+}
+
+@keyframes logoSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Navigation links */
+
+.navbar nav {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+.navbar nav a {
+    position: relative;
+
+    padding: 9px 13px;
+
+    border-radius: 999px;
+
+    color: var(--text-muted);
+
+    font-size: 0.78rem;
+
+    font-weight: 500;
+
+    transition:
+        color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.navbar nav a:hover {
+    color: var(--text-primary);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+}
+
+.navbar nav a.active {
+    color: var(--text-primary);
+
+    background:
+        rgba(255, 255, 255, 0.09);
+}
+
+
+/* =========================================================
+   07. HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(300px, 0.75fr);
+
+    align-items: center;
+
+    gap: 80px;
+
+    padding-top: 130px;
+    padding-bottom: 100px;
+}
+
+
+/* Hero decorative glow */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    left: 20%;
+
+    top: 20%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(41, 51, 121, 0.25),
+            transparent 68%
+        );
+
+    filter: blur(10px);
+
+    pointer-events: none;
+
+    z-index: -1;
+}
+
+
+/* Hero content */
+
+.hero-content {
+    position: relative;
+
+    max-width: 850px;
+
+    animation:
+        heroReveal 900ms
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        both;
+}
+
+@keyframes heroReveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(35px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* Edition label */
+
+.edition {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 28px;
+
+    padding: 7px 12px;
+
+    border:
+        1px solid
+        rgba(229, 163, 0, 0.3);
+
+    border-radius: 999px;
+
+    background:
+        rgba(229, 163, 0, 0.08);
+
+    color: var(--yellow);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+}
+
+.edition::before {
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--yellow);
+
+    box-shadow:
+        0 0 12px
+        rgba(229, 163, 0, 0.8);
+
+    animation:
+        pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        opacity: 0.5;
+
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform: scale(1.15);
+    }
+}
+
+
+/* Hero title */
+
+.hero h1 {
+    max-width: 900px;
+
+    margin-bottom: 28px;
+
+    background:
+        linear-gradient(
+            115deg,
+            #ffffff 0%,
+            #ffffff 35%,
+            #d9dcff 58%,
+            #aeb5ff 100%
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.hero h3 {
+    max-width: 780px;
+
+    margin-bottom: 22px;
+
+    color: var(--text-primary);
+
+    font-size: clamp(
+        1.35rem,
+        2.5vw,
+        2rem
+    );
+
+    line-height: 1.25;
+}
+
+.hero p {
+    max-width: 680px;
+
+    margin-bottom: 38px;
+
+    color: var(--text-secondary);
+
+    font-size: clamp(
+        1rem,
+        1.5vw,
+        1.12rem
+    );
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   08. HERO BUTTONS
+   ========================================================= */
+
+.hero-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding:
+        0 22px;
+
+    border-radius: 999px;
+
+    font-size: 0.86rem;
+
+    font-weight: 700;
+
+    transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        background var(--transition),
+        border-color var(--transition);
+}
+
+.btn-primary {
+    color: #fff;
+
+    background:
+        var(--blue);
+
+    box-shadow:
+        0 10px 30px
+        rgba(41, 51, 121, 0.35);
+}
+
+.btn-primary:hover {
+    transform:
+        translateY(-3px);
+
+    background:
+        var(--blue-light);
+
+    box-shadow:
+        0 15px 40px
+        rgba(41, 51, 121, 0.5);
+}
+
+.btn-secondary {
+    border:
+        1px solid
+        var(--border-strong);
+
+    color: var(--text-primary);
+
+    background:
+        rgba(255, 255, 255, 0.04);
+}
+
+.btn-secondary:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(255, 255, 255, 0.25);
+
+    background:
+        rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   09. HERO FLOATING CARDS
+   ========================================================= */
+
+.hero-right {
+    position: relative;
+
+    min-height: 500px;
+
+    display: grid;
+
+    place-items: center;
+}
+
+.floating-card {
+    position: absolute;
+
+    width: 210px;
+
+    padding: 24px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.09),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        var(--shadow-md);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition);
+}
+
+.floating-card:hover {
+    transform:
+        translateY(-8px)
+        rotate(0deg) !important;
+
+    border-color:
+        var(--border-strong);
+}
+
+.floating-card span {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+}
+
+.floating-card h2 {
+    font-size: 3.2rem;
+
+    line-height: 1;
+}
+
+
+/* Individual card positioning */
+
+.card-blue {
+    top: 5%;
+    left: 10%;
+
+    border-color:
+        rgba(41, 51, 121, 0.45);
+
+    animation:
+        floatCard 6s ease-in-out infinite;
+}
+
+.card-red {
+    top: 30%;
+    right: 2%;
+
+    border-color:
+        rgba(184, 24, 23, 0.4);
+
+    animation:
+        floatCard 7s ease-in-out
+        -1s infinite;
+}
+
+.card-yellow {
+    bottom: 20%;
+    left: 3%;
+
+    border-color:
+        rgba(229, 163, 0, 0.4);
+
+    animation:
+        floatCard 8s ease-in-out
+        -3s infinite;
+}
+
+.card-green {
+    right: 12%;
+    bottom: 2%;
+
+    border-color:
+        rgba(96, 120, 41, 0.45);
+
+    animation:
+        floatCard 7s ease-in-out
+        -2s infinite;
+}
+
+@keyframes floatCard {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateY(-14px)
+            rotate(1deg);
+    }
+}
+
+
+/* =========================================================
+   10. SECTION FOUNDATION
+   ========================================================= */
+
+.section {
+    position: relative;
+
+    padding-top:
+        var(--section-padding);
+
+    padding-bottom:
+        var(--section-padding);
+}
+
+.section-title {
+    max-width: 800px;
+
+    margin-bottom: 60px;
+}
+
+.section-title > span {
+    display: inline-block;
+
+    margin-bottom: 18px;
+
+    color: var(--yellow);
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    letter-spacing: 0.16em;
+
+    text-transform: uppercase;
+}
+
+.section-title h2 {
+    margin-bottom: 22px;
+}
+
+.section-title p {
+    max-width: 700px;
+
+    font-size: 1rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   11. GENERIC GLASS SURFACE
+   ========================================================= */
+
+.glass {
+    border:
+        1px solid
+        var(--border);
+
+    background:
+        var(--surface);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+
+/* =========================================================
+   12. SCROLL REVEAL SUPPORT
+   ========================================================= */
+
+.reveal {
+    opacity: 0;
+
+    transform:
+        translateY(30px);
+
+    transition:
+        opacity 700ms ease,
+        transform 700ms
+        cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   13. ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+    outline:
+        2px solid
+        var(--yellow);
+
+    outline-offset: 4px;
+
+    border-radius: 4px;
+}
+
+
+/* =========================================================
+   END OF PART 1
+   ========================================================= */
