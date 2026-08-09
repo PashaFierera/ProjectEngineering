@@ -1012,3 +1012,1073 @@ strong {
 /* =========================================================
    END OF PART 1
    ========================================================= */
+
+/* =========================================================
+   ENGINEERING FUTURES 2026
+   STYLE.CSS — PART 2
+   Dashboard Components
+   ========================================================= */
+
+
+/* =========================================================
+   14. EXECUTIVE SUMMARY
+   ========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.summary-card {
+    position: relative;
+
+    min-height: 230px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 30px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+.summary-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+    height: 130px;
+
+    top: -70px;
+    right: -60px;
+
+    border-radius: 50%;
+
+    background:
+        var(--blue);
+
+    filter:
+        blur(45px);
+
+    opacity: 0.35;
+
+    pointer-events: none;
+}
+
+.summary-card:nth-child(2)::before {
+    background:
+        var(--red);
+}
+
+.summary-card:nth-child(3)::before {
+    background:
+        var(--yellow);
+}
+
+.summary-card:nth-child(4)::before {
+    background:
+        var(--green);
+}
+
+.summary-card:hover {
+    transform:
+        translateY(-7px);
+
+    border-color:
+        var(--border-strong);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+.summary-card h3 {
+    position: relative;
+
+    font-size:
+        clamp(2.5rem, 4vw, 4.2rem);
+
+    line-height: 1;
+
+    color:
+        var(--text-primary);
+
+    z-index: 1;
+}
+
+.summary-card p {
+    position: relative;
+
+    max-width: 280px;
+
+    font-size: 0.85rem;
+
+    line-height: 1.65;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   15. COUNTRY SELECTOR
+   ========================================================= */
+
+.country-selector {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 28px;
+}
+
+.country {
+    position: relative;
+
+    padding:
+        10px 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        999px;
+
+    color:
+        var(--text-muted);
+
+    background:
+        rgba(255, 255, 255, 0.035);
+
+    font-size: 0.78rem;
+
+    font-weight: 600;
+
+    transition:
+        all var(--transition-fast);
+}
+
+.country:hover {
+    color:
+        var(--text-primary);
+
+    background:
+        rgba(255, 255, 255, 0.075);
+
+    border-color:
+        var(--border-strong);
+
+    transform:
+        translateY(-2px);
+}
+
+.country.active {
+    color:
+        #ffffff;
+
+    background:
+        var(--blue);
+
+    border-color:
+        var(--blue-light);
+
+    box-shadow:
+        0 8px 24px
+        rgba(41, 51, 121, 0.35);
+}
+
+
+/* =========================================================
+   16. CHART CONTAINER
+   ========================================================= */
+
+.chart-card {
+    position: relative;
+
+    width: 100%;
+
+    min-height: 430px;
+
+    padding: 32px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.065),
+            rgba(255, 255, 255, 0.02)
+        );
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+.chart-card canvas {
+    width: 100% !important;
+
+    height: 360px !important;
+}
+
+
+/* =========================================================
+   17. READINESS RANKING
+   ========================================================= */
+
+.ranking-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        14px 40px;
+}
+
+.ranking-card {
+    padding:
+        20px 0;
+
+    border-bottom:
+        1px solid
+        var(--border);
+}
+
+.ranking-card > span {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+    color:
+        var(--text-secondary);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
+}
+
+.progress {
+    width: 100%;
+
+    height: 10px;
+
+    overflow: hidden;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255, 255, 255, 0.07);
+}
+
+.progress-bar {
+    position: relative;
+
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding-right: 6px;
+
+    border-radius:
+        inherit;
+
+    color:
+        transparent;
+
+    font-size: 0.65rem;
+
+    background:
+        var(--blue);
+
+    animation:
+        progressReveal 1.2s
+        cubic-bezier(0.2, 0.8, 0.2, 1)
+        both;
+}
+
+.progress-bar::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.25),
+            transparent
+        );
+
+    transform:
+        translateX(-100%);
+
+    animation:
+        progressShine 2.5s
+        ease-in-out
+        infinite;
+}
+
+@keyframes progressReveal {
+
+    from {
+        width: 0 !important;
+    }
+
+}
+
+@keyframes progressShine {
+
+    0% {
+        transform:
+            translateX(-100%);
+    }
+
+    50%,
+    100% {
+        transform:
+            translateX(100%);
+    }
+
+}
+
+
+/* Country-specific progress colors */
+
+.progress-bar.usa {
+    background:
+        var(--blue);
+}
+
+.progress-bar.singapore {
+    background:
+        var(--yellow);
+}
+
+.progress-bar.germany {
+    background:
+        var(--red);
+}
+
+.progress-bar.korea {
+    background:
+        var(--orange);
+}
+
+.progress-bar.japan {
+    background:
+        var(--red-light);
+}
+
+.progress-bar.india {
+    background:
+        var(--lettuce);
+}
+
+.progress-bar.malaysia {
+    background:
+        var(--green-light);
+}
+
+.progress-bar.thailand {
+    background:
+        var(--orange-light);
+}
+
+.progress-bar.indonesia {
+    background:
+        var(--green);
+}
+
+
+/* =========================================================
+   18. ENGINEERING EXPLORER
+   ========================================================= */
+
+.engineering-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+.engineering-card {
+    position: relative;
+
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 26px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-md);
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+}
+
+.engineering-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    right: -50px;
+    bottom: -50px;
+
+    border-radius: 50%;
+
+    background:
+        var(--blue);
+
+    opacity: 0.15;
+
+    filter:
+        blur(25px);
+
+    transition:
+        transform var(--transition),
+        opacity var(--transition);
+}
+
+.engineering-card:nth-child(2)::after {
+    background:
+        var(--orange);
+}
+
+.engineering-card:nth-child(3)::after {
+    background:
+        var(--green);
+}
+
+.engineering-card:nth-child(4)::after {
+    background:
+        var(--yellow);
+}
+
+.engineering-card:nth-child(5)::after {
+    background:
+        var(--red);
+}
+
+.engineering-card:nth-child(6)::after {
+    background:
+        var(--blue);
+}
+
+.engineering-card:nth-child(7)::after {
+    background:
+        var(--green);
+}
+
+.engineering-card:nth-child(8)::after {
+    background:
+        var(--orange);
+}
+
+.engineering-card:hover {
+    transform:
+        translateY(-6px);
+
+    border-color:
+        var(--border-strong);
+
+    background:
+        rgba(255, 255, 255, 0.065);
+}
+
+.engineering-card:hover::after {
+    transform:
+        scale(2);
+
+    opacity:
+        0.28;
+}
+
+.engineering-card h3 {
+    position: relative;
+
+    z-index: 1;
+
+    font-size:
+        1.15rem;
+
+    line-height: 1.25;
+}
+
+.engineering-card p {
+    position: relative;
+
+    max-width: 260px;
+
+    z-index: 1;
+
+    font-size:
+        0.82rem;
+
+    line-height:
+        1.7;
+}
+
+
+/* =========================================================
+   19. SKILL GAP GRID
+   ========================================================= */
+
+.gap-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 20px;
+}
+
+.gap-card {
+    position: relative;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    overflow: hidden;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition);
+}
+
+.gap-card:hover {
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--border-strong);
+}
+
+.gap-card h3 {
+    margin-bottom:
+        20px;
+
+    font-size:
+        1.05rem;
+}
+
+.gap-card:nth-child(1) {
+    border-top:
+        2px solid
+        var(--red);
+}
+
+.gap-card:nth-child(2) {
+    border-top:
+        2px solid
+        var(--yellow);
+}
+
+.gap-card:nth-child(3) {
+    border-top:
+        2px solid
+        var(--green);
+}
+
+.gap-card ul {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        11px;
+
+    list-style:
+        none;
+}
+
+.gap-card li {
+    position:
+        relative;
+
+    padding-left:
+        17px;
+
+    color:
+        var(--text-secondary);
+
+    font-size:
+        0.84rem;
+}
+
+.gap-card li::before {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    top:
+        0.65em;
+
+    width:
+        5px;
+
+    height:
+        5px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--red);
+}
+
+.gap-card:nth-child(2) li::before {
+    background:
+        var(--yellow);
+}
+
+.gap-card:nth-child(3) li::before {
+    background:
+        var(--green);
+}
+
+
+/* =========================================================
+   20. TECHNOLOGY CLOUD
+   ========================================================= */
+
+.technology-cloud {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        10px;
+
+    max-width:
+        1050px;
+
+    margin-inline:
+        auto;
+
+    padding:
+        40px 20px;
+}
+
+.technology-cloud span {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        13px 19px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255, 255, 255, 0.045);
+
+    color:
+        var(--text-secondary);
+
+    font-size:
+        0.82rem;
+
+    font-weight:
+        500;
+
+    transition:
+        all var(--transition);
+}
+
+.technology-cloud span:nth-child(4n + 1):hover {
+    background:
+        rgba(41, 51, 121, 0.25);
+
+    border-color:
+        rgba(89, 99, 168, 0.5);
+
+    color:
+        #ffffff;
+}
+
+.technology-cloud span:nth-child(4n + 2):hover {
+    background:
+        rgba(184, 24, 23, 0.2);
+
+    border-color:
+        rgba(217, 74, 72, 0.45);
+
+    color:
+        #ffffff;
+}
+
+.technology-cloud span:nth-child(4n + 3):hover {
+    background:
+        rgba(229, 163, 0, 0.18);
+
+    border-color:
+        rgba(242, 195, 77, 0.45);
+
+    color:
+        #ffffff;
+}
+
+.technology-cloud span:nth-child(4n + 4):hover {
+    background:
+        rgba(96, 120, 41, 0.2);
+
+    border-color:
+        rgba(137, 157, 80, 0.45);
+
+    color:
+        #ffffff;
+}
+
+.technology-cloud span:hover {
+    transform:
+        translateY(-4px)
+        scale(1.025);
+
+    box-shadow:
+        var(--shadow-sm);
+}
+
+
+/* =========================================================
+   21. RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+    .navbar nav {
+        display:
+            none;
+    }
+
+    .hero {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            30px;
+
+        padding-top:
+            150px;
+    }
+
+    .hero-right {
+        min-height:
+            350px;
+
+        max-width:
+            700px;
+
+        margin-inline:
+            auto;
+
+        width:
+            100%;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .engineering-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .ranking-container {
+        grid-template-columns:
+            1fr;
+    }
+}
+
+
+/* =========================================================
+   22. RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 680px) {
+
+    :root {
+        --section-padding:
+            80px;
+    }
+
+    .section,
+    .hero {
+        width:
+            min(
+                calc(100% - 28px),
+                var(--container)
+            );
+    }
+
+    .navbar {
+        top:
+            10px;
+
+        width:
+            calc(100% - 20px);
+
+        min-height:
+            58px;
+
+        padding:
+            8px 14px;
+    }
+
+    .logo h2 {
+        font-size:
+            0.9rem;
+    }
+
+    .hero {
+        min-height:
+            auto;
+
+        padding-top:
+            140px;
+
+        padding-bottom:
+            70px;
+    }
+
+    .hero h1 {
+        font-size:
+            clamp(
+                3.2rem,
+                17vw,
+                5rem
+            );
+    }
+
+    .hero h3 {
+        font-size:
+            1.25rem;
+    }
+
+    .hero-right {
+        min-height:
+            430px;
+    }
+
+    .floating-card {
+        width:
+            165px;
+
+        padding:
+            19px;
+    }
+
+    .floating-card h2 {
+        font-size:
+            2.5rem;
+    }
+
+    .card-blue {
+        left:
+            0;
+    }
+
+    .card-red {
+        right:
+            0;
+    }
+
+    .card-yellow {
+        left:
+            0;
+
+        bottom:
+            14%;
+    }
+
+    .card-green {
+        right:
+            0;
+
+        bottom:
+            0;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .summary-card {
+        min-height:
+            190px;
+    }
+
+    .engineering-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .gap-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .chart-card {
+        min-height:
+            330px;
+
+        padding:
+            18px;
+    }
+
+    .chart-card canvas {
+        height:
+            280px !important;
+    }
+
+    .country-selector {
+        gap:
+            6px;
+    }
+
+    .country {
+        padding:
+            8px 11px;
+
+        font-size:
+            0.72rem;
+    }
+
+    .technology-cloud {
+        padding:
+            20px 0;
+    }
+
+    .technology-cloud span {
+        padding:
+            10px 14px;
+
+        font-size:
+            0.75rem;
+    }
+
+}
+
+
+/* =========================================================
+   END OF PART 2
+   ========================================================= */
