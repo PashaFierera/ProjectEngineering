@@ -1,338 +1,186 @@
 /* =========================================================
    ENGINEERING FUTURES 2026
-   app.js — Part 1
-   Core interactions
+   app.js
+   Main application controller
    ========================================================= */
+
+const APP = {
+
+    data: {
+        countries: null,
+        skills: null
+    },
+
+    state: {
+        country: "ID",
+        engineeringRole: "software",
+        activeView: "overview"
+    },
+
+    charts: {},
+
+    config: {
+        countriesPath: "data/countries.json",
+        skillsPath: "data/skills.json"
+    }
+
+};
 
 
 /* =========================================================
-   01. DOM READY
+   01. DOM HELPERS
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    initNavigation();
-    initScrollReveal();
-    initCounters();
-    initCountrySelector();
-    initCareerSelector();
-    initSkillInteractions();
-
-});
+function $(selector) {
+    return document.querySelector(selector);
+}
 
 
-/* =========================================================
-   02. NAVIGATION
-   ========================================================= */
-
-function initNavigation() {
-
-    const navbar = document.querySelector(".navbar");
-
-    if (!navbar) return;
-
-    const updateNavbar = () => {
-
-        if (window.scrollY > 40) {
-            navbar.classList.add("scrolled");
-        } else {
-            navbar.classList.remove("scrolled");
-        }
-
-    };
-
-    updateNavbar();
-
-    window.addEventListener(
-        "scroll",
-        updateNavbar,
-        { passive: true }
+function $$(selector) {
+    return Array.from(
+        document.querySelectorAll(selector)
     );
+}
 
 
-    /*
-     * Highlight the navigation item based
-     * on the section currently visible.
-     */
+function setText(
+    selector,
+    value
+) {
 
-    const navLinks =
-        document.querySelectorAll(
-            ".navbar nav a"
-        );
+    const element =
+        $(selector);
 
-    const sections =
-        document.querySelectorAll(
-            "section[id]"
-        );
-
-    if (!navLinks.length || !sections.length) {
+    if (!element) {
         return;
     }
 
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (!entry.isIntersecting) {
-                        return;
-                    }
-
-                    const id =
-                        entry.target.getAttribute(
-                            "id"
-                        );
-
-                    navLinks.forEach(link => {
-
-                        link.classList.remove(
-                            "active"
-                        );
-
-                        const href =
-                            link.getAttribute(
-                                "href"
-                            );
-
-                        if (href === `#${id}`) {
-
-                            link.classList.add(
-                                "active"
-                            );
-
-                        }
-
-                    });
-
-                });
-
-            },
-            {
-                rootMargin:
-                    "-35% 0px -55% 0px"
-            }
-        );
-
-
-    sections.forEach(section => {
-
-        observer.observe(section);
-
-    });
+    element.textContent =
+        value ?? "—";
 
 }
 
 
 /* =========================================================
-   03. SCROLL REVEAL
+   02. FETCH JSON DATA
    ========================================================= */
 
-function initScrollReveal() {
+async function loadJSON(path) {
 
-    const elements =
-        document.querySelectorAll(
-            ".summary-card, " +
-            ".chart-card, " +
-            ".ranking-card, " +
-            ".engineering-card, " +
-            ".gap-card, " +
-            ".source-card, " +
-            ".timeline-item, " +
-            ".recommendation-card, " +
-            ".about-card"
+    const response =
+        await fetch(path);
+
+    if (!response.ok) {
+
+        throw new Error(
+            `Unable to load ${path}`
         );
 
-    if (!elements.length) {
-        return;
     }
 
-
-    elements.forEach((element, index) => {
-
-        element.classList.add("reveal");
-
-        /*
-         * Small staggered delay creates
-         * the "report loading" effect.
-         */
-
-        element.style.transitionDelay =
-            `${Math.min(index * 45, 400)}ms`;
-
-    });
-
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.12
-            }
-        );
-
-
-    elements.forEach(element => {
-
-        observer.observe(element);
-
-    });
+    return response.json();
 
 }
 
 
 /* =========================================================
-   04. ANIMATED COUNTERS
+   03. LOAD APPLICATION DATA
    ========================================================= */
 
-function initCounters() {
+async function loadApplicationData() {
 
-    const counters =
-        document.querySelectorAll(
-            "[data-counter]"
+    try {
+
+        const [
+            countries,
+            skills
+        ] = await Promise.all([
+
+            loadJSON(
+                APP.config.countriesPath
+            ),
+
+            loadJSON(
+                APP.config.skillsPath
+            )
+
+        ]);
+
+
+        APP.data.countries =
+            countries;
+
+        APP.data.skills =
+            skills;
+
+
+        console.log(
+            "Engineering Futures data loaded."
         );
 
-    if (!counters.length) {
-        return;
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "engineeringDataLoaded"
+            )
+        );
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Data loading failed:",
+            error
+        );
+
+
+        showDataError(
+            error
+        );
+
+
+        return false;
+
     }
 
-
-    const animateCounter =
-        element => {
-
-            const target =
-                parseFloat(
-                    element.dataset.counter
-                );
-
-            const suffix =
-                element.dataset.suffix || "";
-
-            const prefix =
-                element.dataset.prefix || "";
-
-            const decimals =
-                element.dataset.decimals
-                    ? parseInt(
-                        element.dataset.decimals,
-                        10
-                    )
-                    : 0;
-
-            const duration = 1400;
-
-            const startTime =
-                performance.now();
+}
 
 
-            const update =
-                currentTime => {
+/* =========================================================
+   04. DATA ERROR STATE
+   ========================================================= */
 
-                    const elapsed =
-                        currentTime -
-                        startTime;
+function showDataError(error) {
 
-                    const progress =
-                        Math.min(
-                            elapsed / duration,
-                            1
-                        );
-
-                    /*
-                     * Ease-out curve.
-                     */
-
-                    const eased =
-                        1 -
-                        Math.pow(
-                            1 - progress,
-                            3
-                        );
-
-                    const value =
-                        target * eased;
-
-                    element.textContent =
-                        prefix +
-                        value.toFixed(
-                            decimals
-                        ) +
-                        suffix;
-
-
-                    if (progress < 1) {
-
-                        requestAnimationFrame(
-                            update
-                        );
-
-                    }
-
-                };
-
-
-            requestAnimationFrame(
-                update
-            );
-
-        };
-
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (
-                        entry.isIntersecting
-                    ) {
-
-                        animateCounter(
-                            entry.target
-                        );
-
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.6
-            }
+    const message =
+        document.createElement(
+            "div"
         );
 
 
-    counters.forEach(counter => {
+    message.className =
+        "data-error";
 
-        observer.observe(counter);
 
-    });
+    message.innerHTML = `
+
+        <strong>
+            Data unavailable
+        </strong>
+
+        <span>
+            The dashboard could not load
+            its research dataset.
+        </span>
+
+    `;
+
+
+    document.body.prepend(
+        message
+    );
 
 }
 
@@ -341,74 +189,121 @@ function initCounters() {
    05. COUNTRY SELECTOR
    ========================================================= */
 
-function initCountrySelector() {
+function initializeCountrySelector() {
 
-    const countries =
-        document.querySelectorAll(
-            ".country"
+    const selector =
+        $(
+            "#countrySelector"
         );
 
-    if (!countries.length) {
+
+    if (!selector) {
         return;
     }
 
 
-    countries.forEach(country => {
-
-        country.addEventListener(
-            "click",
-            () => {
-
-                countries.forEach(item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                });
+    const countries =
+        APP.data.countries
+            ?.countries;
 
 
-                country.classList.add(
-                    "active"
+    if (!countries) {
+        return;
+    }
+
+
+    selector.innerHTML = "";
+
+
+    Object.entries(
+        countries
+    ).forEach(
+        ([code, country]) => {
+
+            const option =
+                document.createElement(
+                    "option"
                 );
 
 
-                const countryCode =
-                    country.dataset.country;
+            option.value =
+                code;
 
-                if (countryCode) {
 
-                    updateCountryDashboard(
-                        countryCode
-                    );
+            option.textContent =
+                `${country.flag} ${country.name}`;
 
-                }
 
-            }
-        );
+            selector.appendChild(
+                option
+            );
 
-    });
+        }
+    );
+
+
+    selector.value =
+        APP.state.country;
+
+
+    selector.addEventListener(
+        "change",
+        event => {
+
+            selectCountry(
+                event.target.value
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   06. COUNTRY DASHBOARD UPDATE
+   06. COUNTRY SELECTION
    ========================================================= */
 
-function updateCountryDashboard(
+function selectCountry(
     countryCode
 ) {
 
-    /*
-     * This function is intentionally
-     * data-source agnostic.
-     *
-     * The actual country data will come
-     * from countries.json.
-     */
+    const countries =
+        APP.data.countries
+            ?.countries;
+
+
+    if (
+        !countries ||
+        !countries[countryCode]
+    ) {
+        return;
+    }
+
+
+    APP.state.country =
+        countryCode;
+
+
+    const country =
+        countries[countryCode];
+
+
+    updateCountryUI(
+        country
+    );
+
+
+    updateCountryCharts(
+        countryCode
+    );
+
+
+    updateRecommendations();
+
 
     document.dispatchEvent(
+
         new CustomEvent(
             "countrySelected",
             {
@@ -418,543 +313,288 @@ function updateCountryDashboard(
                 }
             }
         )
+
     );
-
-
-    /*
-     * Update visible country labels.
-     */
-
-    const labels =
-        document.querySelectorAll(
-            "[data-selected-country]"
-        );
-
-    labels.forEach(label => {
-
-        label.textContent =
-            formatCountryName(
-                countryCode
-            );
-
-    });
 
 }
 
 
 /* =========================================================
-   07. COUNTRY NAME FORMATTER
+   07. UPDATE COUNTRY UI
    ========================================================= */
 
-function formatCountryName(
-    code
+function updateCountryUI(
+    country
 ) {
 
-    const names = {
-
-        ID: "🇮🇩 Indonesia",
-
-        SG: "🇸🇬 Singapore",
-
-        IN: "🇮🇳 India",
-
-        JP: "🇯🇵 Japan",
-
-        US: "🇺🇸 United States",
-
-        DE: "🇩🇪 Germany",
-
-        KR: "🇰🇷 South Korea",
-
-        MY: "🇲🇾 Malaysia",
-
-        TH: "🇹🇭 Thailand"
-
-    };
+    setText(
+        "#countryName",
+        country.name
+    );
 
 
-    return (
-        names[code] ||
-        code
+    setText(
+        "#countryFlag",
+        country.flag
+    );
+
+
+    setText(
+        "#countryRegion",
+        country.region
+    );
+
+
+    setText(
+        "#countryIncome",
+        country.incomeGroup
+    );
+
+
+    setText(
+        "#countryStatus",
+        country.assessment?.status
+    );
+
+
+    setText(
+        "#countryPriority",
+        country.assessment?.priority
+    );
+
+
+    updateCountryMetrics(
+        country
     );
 
 }
 
 
 /* =========================================================
-   08. ENGINEERING CAREER SELECTOR
+   08. COUNTRY METRICS
    ========================================================= */
 
-function initCareerSelector() {
+function updateCountryMetrics(
+    country
+) {
 
-    const buttons =
-        document.querySelectorAll(
-            ".career-btn"
+    const skills =
+        country.skills || {};
+
+
+    const digital =
+        skills.digital;
+
+
+    const ai =
+        skills.ai;
+
+
+    const cloud =
+        skills.cloud;
+
+
+    const automation =
+        skills.automation;
+
+
+    const sustainability =
+        skills.sustainability;
+
+
+    setMetric(
+        "#digitalScore",
+        digital
+    );
+
+
+    setMetric(
+        "#aiScore",
+        ai
+    );
+
+
+    setMetric(
+        "#cloudScore",
+        cloud
+    );
+
+
+    setMetric(
+        "#automationScore",
+        automation
+    );
+
+
+    setMetric(
+        "#sustainabilityScore",
+        sustainability
+    );
+
+
+    const values = [
+
+        digital,
+        ai,
+        cloud,
+        automation,
+        sustainability
+
+    ].filter(
+        value =>
+            typeof value === "number"
+    );
+
+
+    if (
+        values.length > 0
+    ) {
+
+        const average =
+            Math.round(
+
+                values.reduce(
+                    (
+                        total,
+                        value
+                    ) =>
+                        total + value,
+                    0
+                )
+                /
+                values.length
+
+            );
+
+
+        setMetric(
+            "#overallScore",
+            average
         );
 
-    if (!buttons.length) {
+    } else {
+
+        setMetric(
+            "#overallScore",
+            null
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   09. SET METRIC
+   ========================================================= */
+
+function setMetric(
+    selector,
+    value
+) {
+
+    const element =
+        $(selector);
+
+
+    if (!element) {
         return;
     }
 
 
-    buttons.forEach(button => {
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
-        button.addEventListener(
-            "click",
-            () => {
+        element.textContent =
+            "—";
 
-                buttons.forEach(item => {
+        element.removeAttribute(
+            "data-value"
+        );
 
-                    item.classList.remove(
-                        "active"
-                    );
+        return;
 
-                });
+    }
 
 
-                button.classList.add(
-                    "active"
+    element.textContent =
+        `${value}`;
+
+    element.dataset.value =
+        value;
+
+}
+
+
+/* =========================================================
+   10. ENGINEERING ROLE SELECTOR
+   ========================================================= */
+
+function initializeEngineeringSelector() {
+
+    const selector =
+        $(
+            "#engineeringSelector"
+        );
+
+
+    if (!selector) {
+        return;
+    }
+
+
+    const roles =
+        APP.data.skills
+            ?.engineeringRoles;
+
+
+    if (!roles) {
+        return;
+    }
+
+
+    selector.innerHTML = "";
+
+
+    Object.entries(
+        roles
+    ).forEach(
+        ([role, information]) => {
+
+            const option =
+                document.createElement(
+                    "option"
                 );
 
 
-                const role =
-                    button.dataset.role;
+            option.value =
+                role;
 
 
-                updateCareerRecommendation(
-                    role
-                );
+            option.textContent =
+                information.name;
 
-            }
-        );
 
-    });
-
-}
-
-
-/* =========================================================
-   09. CAREER RECOMMENDATIONS
-   ========================================================= */
-
-const fallbackRecommendations = {
-
-    software: {
-
-        title:
-            "Software Engineering",
-
-        high: [
-            "AI Literacy",
-            "Cloud Computing",
-            "Platform Engineering",
-            "Cybersecurity",
-            "System Design"
-        ],
-
-        medium: [
-            "Technical Writing",
-            "Product Thinking",
-            "Leadership",
-            "Data Engineering"
-        ],
-
-        emerging: [
-            "Agentic AI",
-            "MLOps",
-            "AI Security",
-            "FinOps"
-        ]
-
-    },
-
-
-    mechanical: {
-
-        title:
-            "Mechanical Engineering",
-
-        high: [
-            "Automation",
-            "Digital Manufacturing",
-            "CAD / CAE",
-            "Data Literacy",
-            "Systems Thinking"
-        ],
-
-        medium: [
-            "Robotics",
-            "Simulation",
-            "Project Management",
-            "Sustainability"
-        ],
-
-        emerging: [
-            "Digital Twins",
-            "Generative Design",
-            "Industrial AI",
-            "Smart Factories"
-        ]
-
-    },
-
-
-    civil: {
-
-        title:
-            "Civil Engineering",
-
-        high: [
-            "BIM",
-            "Data Literacy",
-            "Project Management",
-            "Sustainability",
-            "Digital Construction"
-        ],
-
-        medium: [
-            "GIS",
-            "Automation",
-            "Systems Thinking",
-            "Risk Management"
-        ],
-
-        emerging: [
-            "Digital Twins",
-            "Smart Infrastructure",
-            "AI-assisted Design",
-            "Climate Analytics"
-        ]
-
-    },
-
-
-    electrical: {
-
-        title:
-            "Electrical Engineering",
-
-        high: [
-            "Power Systems",
-            "Automation",
-            "Embedded Systems",
-            "Data Literacy",
-            "Cybersecurity"
-        ],
-
-        medium: [
-            "IoT",
-            "Robotics",
-            "Cloud Computing",
-            "Systems Engineering"
-        ],
-
-        emerging: [
-            "Edge AI",
-            "Smart Grid",
-            "EV Systems",
-            "Digital Twins"
-        ]
-
-    },
-
-
-    industrial: {
-
-        title:
-            "Industrial Engineering",
-
-        high: [
-            "Data Analytics",
-            "Process Optimization",
-            "Automation",
-            "AI Literacy",
-            "Systems Thinking"
-        ],
-
-        medium: [
-            "Supply Chain Analytics",
-            "Simulation",
-            "Product Management",
-            "Sustainability"
-        ],
-
-        emerging: [
-            "Industrial AI",
-            "Digital Twins",
-            "Autonomous Operations",
-            "Generative Optimization"
-        ]
-
-    },
-
-
-    chemical: {
-
-        title:
-            "Chemical Engineering",
-
-        high: [
-            "Process Simulation",
-            "Data Analytics",
-            "Process Safety",
-            "Automation",
-            "Sustainability"
-        ],
-
-        medium: [
-            "AI Literacy",
-            "Advanced Materials",
-            "Systems Thinking",
-            "Project Management"
-        ],
-
-        emerging: [
-            "Digital Twins",
-            "Industrial AI",
-            "Carbon Capture",
-            "Green Chemistry"
-        ]
-
-    },
-
-
-    environmental: {
-
-        title:
-            "Environmental Engineering",
-
-        high: [
-            "Climate Analytics",
-            "Data Literacy",
-            "Environmental Monitoring",
-            "Sustainability",
-            "Systems Thinking"
-        ],
-
-        medium: [
-            "GIS",
-            "Data Visualization",
-            "Policy Literacy",
-            "Project Management"
-        ],
-
-        emerging: [
-            "Climate AI",
-            "Remote Sensing",
-            "Digital Twins",
-            "Carbon Analytics"
-        ]
-
-    },
-
-
-    biomedical: {
-
-        title:
-            "Biomedical Engineering",
-
-        high: [
-            "Data Science",
-            "AI Literacy",
-            "Medical Devices",
-            "Systems Engineering",
-            "Regulatory Literacy"
-        ],
-
-        medium: [
-            "Signal Processing",
-            "Biostatistics",
-            "Cybersecurity",
-            "Product Development"
-        ],
-
-        emerging: [
-            "Generative AI",
-            "Digital Health",
-            "Medical Robotics",
-            "AI Diagnostics"
-        ]
-
-    }
-
-};
-
-
-/* =========================================================
-   10. UPDATE RECOMMENDATION UI
-   ========================================================= */
-
-function updateCareerRecommendation(
-    role
-) {
-
-    const data =
-        fallbackRecommendations[role];
-
-    if (!data) {
-        return;
-    }
-
-
-    const title =
-        document.querySelector(
-            "#selectedRole"
-        );
-
-    if (title) {
-
-        title.textContent =
-            data.title;
-
-    }
-
-
-    const sections =
-        document.querySelectorAll(
-            ".priority-section"
-        );
-
-    if (sections.length >= 3) {
-
-        updateSkillTags(
-            sections[0],
-            data.high
-        );
-
-        updateSkillTags(
-            sections[1],
-            data.medium
-        );
-
-        updateSkillTags(
-            sections[2],
-            data.emerging
-        );
-
-    }
-
-
-    /*
-     * Notify charts / future modules.
-     */
-
-    document.dispatchEvent(
-        new CustomEvent(
-            "careerSelected",
-            {
-                detail: {
-                    role,
-                    data
-                }
-            }
-        )
-    );
-
-}
-
-
-/* =========================================================
-   11. SKILL TAG RENDERER
-   ========================================================= */
-
-function updateSkillTags(
-    section,
-    skills
-) {
-
-    const container =
-        section.querySelector(
-            ".skill-tags"
-        );
-
-    if (!container) {
-        return;
-    }
-
-
-    container.innerHTML = "";
-
-
-    skills.forEach(skill => {
-
-        const tag =
-            document.createElement(
-                "span"
+            selector.appendChild(
+                option
             );
 
-        tag.textContent =
-            skill;
-
-        tag.classList.add(
-            "skill-tag"
-        );
-
-        container.appendChild(
-            tag
-        );
-
-    });
-
-}
+        }
+    );
 
 
-/* =========================================================
-   12. SKILL INTERACTIONS
-   ========================================================= */
+    selector.value =
+        APP.state.engineeringRole;
 
-function initSkillInteractions() {
 
-    document.addEventListener(
-        "click",
+    selector.addEventListener(
+        "change",
         event => {
 
-            const tag =
-                event.target.closest(
-                    ".skill-tags span"
-                );
-
-            if (!tag) {
-                return;
-            }
-
-
-            const skill =
-                tag.textContent.trim();
-
-
-            /*
-             * Small visual feedback.
-             */
-
-            tag.classList.add(
-                "selected"
-            );
-
-
-            setTimeout(() => {
-
-                tag.classList.remove(
-                    "selected"
-                );
-
-            }, 500);
-
-
-            /*
-             * Make the selected skill
-             * available to future modules.
-             */
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "skillSelected",
-                    {
-                        detail: {
-                            skill
-                        }
-                    }
-                )
+            selectEngineeringRole(
+                event.target.value
             );
 
         }
@@ -964,69 +604,1420 @@ function initSkillInteractions() {
 
 
 /* =========================================================
-   13. UTILITY: SAFE NUMBER
+   11. ENGINEERING ROLE SELECTION
    ========================================================= */
 
-function safeNumber(
-    value,
-    fallback = 0
+function selectEngineeringRole(
+    role
 ) {
 
-    const number =
-        Number(value);
+    const roles =
+        APP.data.skills
+            ?.engineeringRoles;
 
-    return Number.isFinite(number)
-        ? number
-        : fallback;
+
+    if (
+        !roles ||
+        !roles[role]
+    ) {
+        return;
+    }
+
+
+    APP.state.engineeringRole =
+        role;
+
+
+    updateEngineeringUI(
+        role
+    );
+
+
+    updateRecommendations();
+
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "careerSelected",
+            {
+                detail: {
+                    role
+                }
+            }
+        )
+
+    );
 
 }
 
 
 /* =========================================================
-   14. UTILITY: DEBOUNCE
+   12. ENGINEERING UI
    ========================================================= */
 
-function debounce(
-    callback,
-    delay = 200
+function updateEngineeringUI(
+    role
 ) {
 
-    let timeout;
+    const information =
+        APP.data.skills
+            ?.engineeringRoles?.[
+                role
+            ];
 
-    return (...args) => {
 
-        clearTimeout(timeout);
+    if (!information) {
+        return;
+    }
 
-        timeout =
-            setTimeout(
-                () => callback(...args),
-                delay
+
+    setText(
+        "#engineeringName",
+        information.name
+    );
+
+
+    renderSkillPills(
+        information.prioritySkills,
+        "prioritySkills"
+    );
+
+
+    renderSkillPills(
+        information.emergingSkills,
+        "emergingSkills"
+    );
+
+}
+
+
+/* =========================================================
+   13. SKILL PILLS
+   ========================================================= */
+
+function renderSkillPills(
+    skillIds,
+    containerId
+) {
+
+    const container =
+        document.getElementById(
+            containerId
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (!skillIds?.length) {
+
+        container.innerHTML =
+            `<span class="empty-state">
+                No skills mapped yet.
+             </span>`;
+
+        return;
+
+    }
+
+
+    skillIds.forEach(
+        skillId => {
+
+            const skill =
+                APP.data.skills
+                    ?.skills?.[
+                        skillId
+                    ];
+
+
+            if (!skill) {
+                return;
+            }
+
+
+            const pill =
+                document.createElement(
+                    "span"
+                );
+
+
+            pill.className =
+                `skill-pill priority-${skill.priority}`;
+
+
+            pill.textContent =
+                skill.name;
+
+
+            pill.title =
+                skill.description;
+
+
+            container.appendChild(
+                pill
             );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   14. RECOMMENDATION ENGINE
+   ========================================================= */
+
+function generateRecommendations() {
+
+    const country =
+        APP.data.countries
+            ?.countries?.[
+                APP.state.country
+            ];
+
+
+    const role =
+        APP.data.skills
+            ?.engineeringRoles?.[
+                APP.state.engineeringRole
+            ];
+
+
+    if (
+        !country ||
+        !role
+    ) {
+        return [];
+    }
+
+
+    const skillDatabase =
+        APP.data.skills
+            ?.skills || {};
+
+
+    const recommendations = [];
+
+
+    const allSkills = [
+
+        ...(role.prioritySkills || []),
+
+        ...(role.emergingSkills || [])
+
+    ];
+
+
+    allSkills.forEach(
+        skillId => {
+
+            const skill =
+                skillDatabase[
+                    skillId
+                ];
+
+
+            if (!skill) {
+                return;
+            }
+
+
+            const category =
+                skill.category;
+
+
+            const countrySkill =
+                getCountrySkillValue(
+                    country,
+                    skillId
+                );
+
+
+            let score;
+
+
+            if (
+                typeof countrySkill ===
+                "number"
+            ) {
+
+                score =
+                    100 -
+                    countrySkill;
+
+            } else {
+
+                score =
+                    priorityToScore(
+                        skill.priority
+                    );
+
+            }
+
+
+            recommendations.push({
+
+                id:
+                    skillId,
+
+                name:
+                    skill.name,
+
+                category,
+
+                priority:
+                    skill.priority,
+
+                gap:
+                    score,
+
+                description:
+                    skill.description,
+
+                intervention:
+                    skill.recommendedIntervention,
+
+                roles:
+                    skill.engineeringRoles
+
+            });
+
+        }
+    );
+
+
+    return recommendations
+        .sort(
+            (
+                a,
+                b
+            ) =>
+                b.gap -
+                a.gap
+        );
+
+}
+
+
+/* =========================================================
+   15. COUNTRY SKILL VALUE
+   ========================================================= */
+
+function getCountrySkillValue(
+    country,
+    skillId
+) {
+
+    const mapping = {
+
+        ai_literacy:
+            "ai",
+
+        generative_ai:
+            "ai",
+
+        agentic_ai:
+            "ai",
+
+        machine_learning:
+            "ai",
+
+        data_literacy:
+            "data",
+
+        data_analytics:
+            "data",
+
+        data_engineering:
+            "data",
+
+        cloud_computing:
+            "cloud",
+
+        platform_engineering:
+            "cloud",
+
+        devops:
+            "cloud",
+
+        cybersecurity:
+            "cybersecurity",
+
+        secure_by_design:
+            "cybersecurity",
+
+        automation:
+            "automation",
+
+        robotics:
+            "automation",
+
+        digital_twins:
+            "automation",
+
+        sustainability:
+            "sustainability",
+
+        climate_analytics:
+            "sustainability",
+
+        systems_thinking:
+            "systemsThinking"
 
     };
 
+
+    const countryField =
+        mapping[skillId];
+
+
+    if (!countryField) {
+        return null;
+    }
+
+
+    return country
+        ?.skills?.[
+            countryField
+        ] ?? null;
+
 }
 
 
 /* =========================================================
-   15. EXPORT GLOBAL APP API
+   16. PRIORITY → SCORE
+   ========================================================= */
+
+function priorityToScore(
+    priority
+) {
+
+    const scores = {
+
+        critical:
+            90,
+
+        high:
+            70,
+
+        emerging:
+            45
+
+    };
+
+
+    return scores[
+        priority
+    ] || 50;
+
+}
+
+
+/* =========================================================
+   17. RENDER RECOMMENDATIONS
+   ========================================================= */
+
+function updateRecommendations() {
+
+    const recommendations =
+        generateRecommendations();
+
+
+    renderRecommendations(
+        recommendations
+    );
+
+
+    updateRecommendationSummary(
+        recommendations
+    );
+
+}
+
+
+/* =========================================================
+   18. RECOMMENDATION CARDS
+   ========================================================= */
+
+function renderRecommendations(
+    recommendations
+) {
+
+    const container =
+        $(
+            "#recommendationList"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !recommendations.length
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                No recommendations
+                available yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    recommendations
+        .slice(0, 8)
+        .forEach(
+            recommendation => {
+
+                const card =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                card.className =
+                    "recommendation-card";
+
+
+                const priorityLabel =
+                    getPriorityLabel(
+                        recommendation.priority
+                    );
+
+
+                card.innerHTML = `
+
+                    <div class="recommendation-top">
+
+                        <span class="recommendation-category">
+                            ${escapeHTML(
+                                recommendation.category
+                            )}
+                        </span>
+
+                        <span class="
+                            recommendation-priority
+                            priority-${recommendation.priority}
+                        ">
+                            ${priorityLabel}
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        ${escapeHTML(
+                            recommendation.name
+                        )}
+                    </h3>
+
+
+                    <p>
+                        ${escapeHTML(
+                            recommendation.description
+                        )}
+                    </p>
+
+
+                    <div class="recommendation-gap">
+
+                        <span>
+                            Priority signal
+                        </span>
+
+                        <strong>
+                            ${recommendation.gap}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="recommendation-action">
+
+                        <span>
+                            Recommended intervention
+                        </span>
+
+                        <strong>
+                            ${escapeHTML(
+                                recommendation.intervention
+                            )}
+                        </strong>
+
+                    </div>
+
+                `;
+
+
+                container.appendChild(
+                    card
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   19. RECOMMENDATION SUMMARY
+   ========================================================= */
+
+function updateRecommendationSummary(
+    recommendations
+) {
+
+    const critical =
+        recommendations.filter(
+            item =>
+                item.priority ===
+                "critical"
+        ).length;
+
+
+    const high =
+        recommendations.filter(
+            item =>
+                item.priority ===
+                "high"
+        ).length;
+
+
+    const emerging =
+        recommendations.filter(
+            item =>
+                item.priority ===
+                "emerging"
+        ).length;
+
+
+    setText(
+        "#criticalSkillCount",
+        critical
+    );
+
+
+    setText(
+        "#highSkillCount",
+        high
+    );
+
+
+    setText(
+        "#emergingSkillCount",
+        emerging
+    );
+
+
+    const top =
+        recommendations[0];
+
+
+    if (top) {
+
+        setText(
+            "#topRecommendation",
+            top.name
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   20. PRIORITY LABEL
+   ========================================================= */
+
+function getPriorityLabel(
+    priority
+) {
+
+    const labels = {
+
+        critical:
+            "PRIORITY NOW",
+
+        high:
+            "BUILD NEXT",
+
+        emerging:
+            "EXPERIMENT"
+
+    };
+
+
+    return (
+        labels[priority] ||
+        "REVIEW"
+    );
+
+}
+
+
+/* =========================================================
+   21. COUNTRY CHART UPDATE
+   ========================================================= */
+
+function updateCountryCharts(
+    countryCode
+) {
+
+    if (
+        !window.EngineeringCharts
+    ) {
+        return;
+    }
+
+
+    window.EngineeringCharts
+        .updateCountry(
+            countryCode
+        );
+
+}
+
+
+/* =========================================================
+   22. CAREER CHART UPDATE
+   ========================================================= */
+
+function updateCareerChart(
+    role
+) {
+
+    if (
+        !window.EngineeringCharts
+    ) {
+        return;
+    }
+
+
+    window.EngineeringCharts
+        .updateCareer(
+            role
+        );
+
+}
+
+
+/* =========================================================
+   23. NAVIGATION
+   ========================================================= */
+
+function initializeNavigation() {
+
+    const navigation =
+        $$(
+            "[data-view]"
+        );
+
+
+    navigation.forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                event => {
+
+                    event.preventDefault();
+
+
+                    const view =
+                        item.dataset.view;
+
+
+                    switchView(
+                        view
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   24. SWITCH VIEW
+   ========================================================= */
+
+function switchView(
+    view
+) {
+
+    APP.state.activeView =
+        view;
+
+
+    $$(
+        "[data-view]"
+    ).forEach(
+        item => {
+
+            item.classList.toggle(
+                "active",
+                item.dataset.view ===
+                view
+            );
+
+        }
+    );
+
+
+    $$(
+        "[data-section]"
+    ).forEach(
+        section => {
+
+            section.classList.toggle(
+                "active",
+                section.dataset.section ===
+                view
+            );
+
+        }
+    );
+
+
+    const target =
+        $(
+            `[data-section="${view}"]`
+        );
+
+
+    if (target) {
+
+        target.scrollIntoView({
+            behavior:
+                "smooth",
+            block:
+                "start"
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   25. DATA SOURCE DISPLAY
+   ========================================================= */
+
+function renderSources() {
+
+    const container =
+        $(
+            "#sourceList"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const sources =
+        APP.data.countries
+            ?.sources;
+
+
+    if (!sources) {
+        return;
+    }
+
+
+    container.innerHTML = "";
+
+
+    Object.values(
+        sources
+    ).forEach(
+        source => {
+
+            const item =
+                document.createElement(
+                    "article"
+                );
+
+
+            item.className =
+                "source-card";
+
+
+            item.innerHTML = `
+
+                <div>
+
+                    <strong>
+                        ${escapeHTML(
+                            source.name
+                        )}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(
+                            source.organization
+                        )}
+                    </span>
+
+                </div>
+
+
+                <p>
+                    ${escapeHTML(
+                        source.relevance
+                    )}
+                </p>
+
+            `;
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   26. ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return String(
+        value
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   27. ANIMATED NUMBER
+   ========================================================= */
+
+function animateNumber(
+    element,
+    target,
+    duration = 900
+) {
+
+    if (!element) {
+        return;
+    }
+
+
+    if (
+        typeof target !==
+        "number"
+    ) {
+
+        element.textContent =
+            "—";
+
+        return;
+
+    }
+
+
+    const start =
+        performance.now();
+
+
+    function frame(
+        timestamp
+    ) {
+
+        const progress =
+            Math.min(
+                (
+                    timestamp -
+                    start
+                ) /
+                duration,
+                1
+            );
+
+
+        const eased =
+            1 -
+            Math.pow(
+                1 - progress,
+                3
+            );
+
+
+        const value =
+            Math.round(
+                target *
+                eased
+            );
+
+
+        element.textContent =
+            value;
+
+
+        if (
+            progress < 1
+        ) {
+
+            requestAnimationFrame(
+                frame
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(
+        frame
+    );
+
+}
+
+
+/* =========================================================
+   28. INTERSECTION OBSERVER
+   ========================================================= */
+
+function initializeAnimations() {
+
+    const elements =
+        $$(
+            "[data-animate]"
+        );
+
+
+    if (
+        !("IntersectionObserver" in window)
+    ) {
+
+        elements.forEach(
+            element => {
+
+                element.classList.add(
+                    "is-visible"
+                );
+
+            }
+        );
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            entries => {
+
+                entries.forEach(
+                    entry => {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            entry.target
+                                .classList
+                                .add(
+                                    "is-visible"
+                                );
+
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    }
+                );
+
+            },
+            {
+                threshold:
+                    0.12
+            }
+        );
+
+
+    elements.forEach(
+        element => {
+
+            observer.observe(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   29. MOBILE MENU
+   ========================================================= */
+
+function initializeMobileMenu() {
+
+    const button =
+        $(
+            "#mobileMenuButton"
+        );
+
+
+    const menu =
+        $(
+            "#mobileMenu"
+        );
+
+
+    if (
+        !button ||
+        !menu
+    ) {
+        return;
+    }
+
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            menu.classList.toggle(
+                "open"
+            );
+
+
+            button.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   30. SEARCH
+   ========================================================= */
+
+function initializeSearch() {
+
+    const input =
+        $(
+            "#skillSearch"
+        );
+
+
+    if (!input) {
+        return;
+    }
+
+
+    input.addEventListener(
+        "input",
+        event => {
+
+            const query =
+                event.target.value
+                    .trim()
+                    .toLowerCase();
+
+
+            $$(".recommendation-card")
+                .forEach(
+                    card => {
+
+                        const text =
+                            card.textContent
+                                .toLowerCase();
+
+
+                        card.style.display =
+                            !query ||
+                            text.includes(
+                                query
+                            )
+                                ? ""
+                                : "none";
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   31. RESET FILTERS
+   ========================================================= */
+
+function resetFilters() {
+
+    APP.state.country =
+        "ID";
+
+    APP.state.engineeringRole =
+        "software";
+
+
+    const countrySelector =
+        $(
+            "#countrySelector"
+        );
+
+
+    const engineeringSelector =
+        $(
+            "#engineeringSelector"
+        );
+
+
+    if (countrySelector) {
+
+        countrySelector.value =
+            "ID";
+
+    }
+
+
+    if (engineeringSelector) {
+
+        engineeringSelector.value =
+            "software";
+
+    }
+
+
+    selectCountry(
+        "ID"
+    );
+
+
+    selectEngineeringRole(
+        "software"
+    );
+
+}
+
+
+/* =========================================================
+   32. RESET BUTTON
+   ========================================================= */
+
+function initializeReset() {
+
+    const button =
+        $(
+            "#resetFilters"
+        );
+
+
+    if (!button) {
+        return;
+    }
+
+
+    button.addEventListener(
+        "click",
+        resetFilters
+    );
+
+}
+
+
+/* =========================================================
+   33. DATA STATUS
+   ========================================================= */
+
+function updateDataStatus() {
+
+    const element =
+        $(
+            "#dataStatus"
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        "Research framework loaded";
+
+
+    element.classList.add(
+        "loaded"
+    );
+
+}
+
+
+/* =========================================================
+   34. INITIALIZE APP
+   ========================================================= */
+
+async function initializeApp() {
+
+    console.log(
+        "Initializing Engineering Futures..."
+    );
+
+
+    const loaded =
+        await loadApplicationData();
+
+
+    if (!loaded) {
+        return;
+    }
+
+
+    initializeCountrySelector();
+
+    initializeEngineeringSelector();
+
+    initializeNavigation();
+
+    initializeMobileMenu();
+
+    initializeSearch();
+
+    initializeReset();
+
+    initializeAnimations();
+
+    renderSources();
+
+
+    selectCountry(
+        APP.state.country
+    );
+
+
+    selectEngineeringRole(
+        APP.state.engineeringRole
+    );
+
+
+    updateDataStatus();
+
+
+    console.log(
+        "Engineering Futures initialized."
+    );
+
+}
+
+
+/* =========================================================
+   35. DOM READY
+   ========================================================= */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initializeApp
+    );
+
+} else {
+
+    initializeApp();
+
+}
+
+
+/* =========================================================
+   36. PUBLIC APP API
    ========================================================= */
 
 window.EngineeringFutures = {
 
-    updateCountryDashboard,
+    state:
+        APP.state,
 
-    updateCareerRecommendation,
+    data:
+        APP.data,
 
-    formatCountryName,
+    selectCountry,
 
-    safeNumber,
+    selectEngineeringRole,
 
-    debounce
+    generateRecommendations,
+
+    resetFilters
 
 };
 
 
 /* =========================================================
-   END OF APP.JS — PART 1
+   END OF APP.JS
    ========================================================= */
