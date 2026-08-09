@@ -1,0 +1,804 @@
+{
+  "metadata": {
+    "dataset": "Engineering Futures Skills Taxonomy",
+    "version": "1.0.0",
+    "lastUpdated": "2026-08-09",
+    "purpose": "Engineering skill taxonomy, gap analysis and learning recommendations",
+    "note": "This taxonomy is a structured framework. Priority levels should be validated against the cited workforce and technology sources before being presented as empirical findings."
+  },
+
+  "skillCategories": {
+    "digital_foundation": {
+      "name": "Digital Foundations",
+      "description": "Foundational digital capabilities required across modern engineering roles.",
+      "color": "#293379"
+    },
+
+    "ai": {
+      "name": "Artificial Intelligence",
+      "description": "Capabilities related to AI adoption, development and responsible use.",
+      "color": "#607829"
+    },
+
+    "data": {
+      "name": "Data",
+      "description": "Data analysis, engineering, interpretation and decision-making capabilities.",
+      "color": "#E5A300"
+    },
+
+    "cloud_platform": {
+      "name": "Cloud & Platform",
+      "description": "Cloud infrastructure, platform engineering and scalable systems.",
+      "color": "#5963A8"
+    },
+
+    "cybersecurity": {
+      "name": "Cybersecurity",
+      "description": "Security engineering, risk management and secure-by-design practices.",
+      "color": "#D94A48"
+    },
+
+    "automation": {
+      "name": "Automation & Robotics",
+      "description": "Automation, robotics, intelligent operations and industrial technology.",
+      "color": "#EE7302"
+    },
+
+    "sustainability": {
+      "name": "Sustainability",
+      "description": "Environmental, energy, climate and sustainable engineering capabilities.",
+      "color": "#899D50"
+    },
+
+    "systems": {
+      "name": "Systems Engineering",
+      "description": "Cross-functional engineering, architecture and complex-system thinking.",
+      "color": "#A6AF32"
+    },
+
+    "human": {
+      "name": "Human & Leadership",
+      "description": "Human capabilities required to complement technical expertise.",
+      "color": "#858995"
+    },
+
+    "emerging": {
+      "name": "Emerging Technologies",
+      "description": "Technology capabilities expected to become increasingly important.",
+      "color": "#FF9B45"
+    }
+  },
+
+  "skills": {
+
+    "ai_literacy": {
+      "name": "AI Literacy",
+      "category": "ai",
+      "description": "Ability to understand, evaluate and responsibly use AI systems in engineering work.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "AI fundamentals",
+        "AI-assisted engineering",
+        "Responsible AI",
+        "Prompt engineering",
+        "AI evaluation"
+      ],
+      "recommendedIntervention": "AI literacy program for engineers"
+    },
+
+
+    "generative_ai": {
+      "name": "Generative AI",
+      "category": "ai",
+      "description": "Practical use of generative AI for engineering analysis, coding, documentation and knowledge work.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "industrial",
+        "mechanical",
+        "electrical",
+        "civil",
+        "biomedical"
+      ],
+      "learningModes": [
+        "AI coding assistants",
+        "Engineering copilots",
+        "Document generation",
+        "Knowledge retrieval",
+        "AI workflow design"
+      ],
+      "recommendedIntervention": "GenAI productivity accelerator"
+    },
+
+
+    "agentic_ai": {
+      "name": "Agentic AI",
+      "category": "emerging",
+      "description": "Designing and supervising AI agents capable of executing multi-step workflows.",
+      "priority": "emerging",
+      "engineeringRoles": [
+        "software",
+        "industrial",
+        "electrical",
+        "mechanical"
+      ],
+      "learningModes": [
+        "Agent architecture",
+        "Tool use",
+        "Workflow orchestration",
+        "Evaluation",
+        "Human-in-the-loop design"
+      ],
+      "recommendedIntervention": "AI agent experimentation program"
+    },
+
+
+    "machine_learning": {
+      "name": "Machine Learning",
+      "category": "ai",
+      "description": "Building and applying machine learning models to engineering problems.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "industrial",
+        "biomedical",
+        "chemical"
+      ],
+      "learningModes": [
+        "Supervised learning",
+        "Unsupervised learning",
+        "Model evaluation",
+        "Feature engineering"
+      ],
+      "recommendedIntervention": "Applied ML for engineering"
+    },
+
+
+    "data_literacy": {
+      "name": "Data Literacy",
+      "category": "data",
+      "description": "Ability to understand, interpret and communicate data.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Statistics",
+        "Data interpretation",
+        "Data visualization",
+        "Experimentation"
+      ],
+      "recommendedIntervention": "Engineering data literacy program"
+    },
+
+
+    "data_analytics": {
+      "name": "Data Analytics",
+      "category": "data",
+      "description": "Using analytical methods to identify patterns, problems and opportunities.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "industrial",
+        "mechanical",
+        "civil",
+        "environmental"
+      ],
+      "learningModes": [
+        "SQL",
+        "Python",
+        "Statistical analysis",
+        "Visualization",
+        "Business analytics"
+      ],
+      "recommendedIntervention": "Engineering analytics pathway"
+    },
+
+
+    "data_engineering": {
+      "name": "Data Engineering",
+      "category": "data",
+      "description": "Designing reliable pipelines and infrastructure for engineering data.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "industrial",
+        "electrical",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Data pipelines",
+        "ETL",
+        "Data modeling",
+        "Distributed systems"
+      ],
+      "recommendedIntervention": "Data engineering fundamentals"
+    },
+
+
+    "cloud_computing": {
+      "name": "Cloud Computing",
+      "category": "cloud_platform",
+      "description": "Using cloud infrastructure and managed services to build scalable systems.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "industrial",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Cloud fundamentals",
+        "Infrastructure",
+        "Containers",
+        "Managed services"
+      ],
+      "recommendedIntervention": "Cloud engineering pathway"
+    },
+
+
+    "platform_engineering": {
+      "name": "Platform Engineering",
+      "category": "cloud_platform",
+      "description": "Building internal platforms that improve developer and engineering productivity.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "electrical"
+      ],
+      "learningModes": [
+        "Internal platforms",
+        "Developer experience",
+        "Infrastructure automation",
+        "Golden paths"
+      ],
+      "recommendedIntervention": "Platform engineering accelerator"
+    },
+
+
+    "devops": {
+      "name": "DevOps",
+      "category": "cloud_platform",
+      "description": "Integrating software development, infrastructure and operational practices.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software"
+      ],
+      "learningModes": [
+        "CI/CD",
+        "Infrastructure as code",
+        "Observability",
+        "Release engineering"
+      ],
+      "recommendedIntervention": "DevOps capability program"
+    },
+
+
+    "cybersecurity": {
+      "name": "Cybersecurity",
+      "category": "cybersecurity",
+      "description": "Protecting engineering systems, infrastructure, data and users.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "industrial",
+        "biomedical",
+        "civil"
+      ],
+      "learningModes": [
+        "Security fundamentals",
+        "Threat modeling",
+        "Secure development",
+        "Risk management"
+      ],
+      "recommendedIntervention": "Security-by-design training"
+    },
+
+
+    "secure_by_design": {
+      "name": "Secure-by-Design",
+      "category": "cybersecurity",
+      "description": "Embedding security considerations into engineering and product design.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "industrial",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Threat modeling",
+        "Security architecture",
+        "Privacy",
+        "Risk assessment"
+      ],
+      "recommendedIntervention": "Secure engineering workshop"
+    },
+
+
+    "automation": {
+      "name": "Automation",
+      "category": "automation",
+      "description": "Using automated systems to improve engineering productivity and operational efficiency.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "mechanical",
+        "electrical",
+        "industrial",
+        "chemical",
+        "civil"
+      ],
+      "learningModes": [
+        "Process automation",
+        "Control systems",
+        "Workflow automation",
+        "Industrial automation"
+      ],
+      "recommendedIntervention": "Engineering automation program"
+    },
+
+
+    "robotics": {
+      "name": "Robotics",
+      "category": "automation",
+      "description": "Designing and integrating robotic systems.",
+      "priority": "high",
+      "engineeringRoles": [
+        "mechanical",
+        "electrical",
+        "industrial",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Robot programming",
+        "Control",
+        "Sensors",
+        "Computer vision"
+      ],
+      "recommendedIntervention": "Robotics learning pathway"
+    },
+
+
+    "digital_twins": {
+      "name": "Digital Twins",
+      "category": "emerging",
+      "description": "Creating digital representations of physical systems for simulation and optimization.",
+      "priority": "emerging",
+      "engineeringRoles": [
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical"
+      ],
+      "learningModes": [
+        "Simulation",
+        "IoT",
+        "Modeling",
+        "Real-time systems"
+      ],
+      "recommendedIntervention": "Digital twin pilot"
+    },
+
+
+    "systems_thinking": {
+      "name": "Systems Thinking",
+      "category": "systems",
+      "description": "Understanding interactions between components, teams, technologies and external constraints.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Systems mapping",
+        "Architecture",
+        "Trade-off analysis",
+        "Complexity management"
+      ],
+      "recommendedIntervention": "Systems thinking workshop"
+    },
+
+
+    "system_design": {
+      "name": "System Design",
+      "category": "systems",
+      "description": "Designing robust technical systems from requirements through implementation.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "mechanical",
+        "industrial",
+        "civil"
+      ],
+      "learningModes": [
+        "Architecture",
+        "Requirements",
+        "Trade-offs",
+        "Scalability"
+      ],
+      "recommendedIntervention": "System design academy"
+    },
+
+
+    "technical_communication": {
+      "name": "Technical Communication",
+      "category": "human",
+      "description": "Communicating technical concepts clearly across engineering and non-engineering audiences.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Technical writing",
+        "Presentation",
+        "Documentation",
+        "Stakeholder communication"
+      ],
+      "recommendedIntervention": "Engineering communication program"
+    },
+
+
+    "analytical_thinking": {
+      "name": "Analytical Thinking",
+      "category": "human",
+      "description": "Breaking complex problems into structured, evidence-based decisions.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Problem framing",
+        "Root cause analysis",
+        "Decision making",
+        "Experimentation"
+      ],
+      "recommendedIntervention": "Engineering problem-solving program"
+    },
+
+
+    "leadership": {
+      "name": "Technical Leadership",
+      "category": "human",
+      "description": "Leading technical initiatives, influencing stakeholders and making engineering decisions.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental",
+        "biomedical"
+      ],
+      "learningModes": [
+        "Technical leadership",
+        "Stakeholder management",
+        "Decision making",
+        "Mentoring"
+      ],
+      "recommendedIntervention": "Technical leadership academy"
+    },
+
+
+    "product_thinking": {
+      "name": "Product Thinking",
+      "category": "human",
+      "description": "Connecting engineering decisions to customer, business and organizational outcomes.",
+      "priority": "high",
+      "engineeringRoles": [
+        "software",
+        "industrial",
+        "biomedical",
+        "electrical"
+      ],
+      "learningModes": [
+        "User needs",
+        "Prioritization",
+        "Product strategy",
+        "Experimentation"
+      ],
+      "recommendedIntervention": "Engineering product thinking workshop"
+    },
+
+
+    "sustainability": {
+      "name": "Sustainable Engineering",
+      "category": "sustainability",
+      "description": "Incorporating environmental and resource considerations into engineering decisions.",
+      "priority": "critical",
+      "engineeringRoles": [
+        "mechanical",
+        "civil",
+        "electrical",
+        "industrial",
+        "chemical",
+        "environmental"
+      ],
+      "learningModes": [
+        "Life-cycle assessment",
+        "Energy efficiency",
+        "Circular design",
+        "Environmental impact"
+      ],
+      "recommendedIntervention": "Sustainable engineering pathway"
+    },
+
+
+    "climate_analytics": {
+      "name": "Climate Analytics",
+      "category": "sustainability",
+      "description": "Using data and engineering methods to understand climate and environmental risks.",
+      "priority": "high",
+      "engineeringRoles": [
+        "environmental",
+        "civil",
+        "industrial",
+        "chemical"
+      ],
+      "learningModes": [
+        "Climate data",
+        "Risk modeling",
+        "Remote sensing",
+        "Scenario analysis"
+      ],
+      "recommendedIntervention": "Climate analytics program"
+    },
+
+
+    "finops": {
+      "name": "FinOps",
+      "category": "cloud_platform",
+      "description": "Connecting cloud technology decisions with financial efficiency.",
+      "priority": "emerging",
+      "engineeringRoles": [
+        "software",
+        "industrial"
+      ],
+      "learningModes": [
+        "Cloud cost management",
+        "Optimization",
+        "Unit economics",
+        "Capacity planning"
+      ],
+      "recommendedIntervention": "Cloud cost optimization workshop"
+    },
+
+
+    "ai_security": {
+      "name": "AI Security",
+      "category": "cybersecurity",
+      "description": "Managing security risks introduced by AI systems and AI-enabled workflows.",
+      "priority": "emerging",
+      "engineeringRoles": [
+        "software",
+        "electrical",
+        "industrial",
+        "biomedical"
+      ],
+      "learningModes": [
+        "AI threat modeling",
+        "Model security",
+        "Data protection",
+        "AI governance"
+      ],
+      "recommendedIntervention": "AI security lab"
+    }
+
+  },
+
+
+  "engineeringRoles": {
+
+    "software": {
+      "name": "Software Engineering",
+
+      "prioritySkills": [
+        "ai_literacy",
+        "generative_ai",
+        "cloud_computing",
+        "cybersecurity",
+        "data_engineering",
+        "system_design"
+      ],
+
+      "emergingSkills": [
+        "agentic_ai",
+        "ai_security",
+        "finops"
+      ]
+    },
+
+
+    "mechanical": {
+      "name": "Mechanical Engineering",
+
+      "prioritySkills": [
+        "automation",
+        "data_literacy",
+        "systems_thinking",
+        "sustainability",
+        "digital_twins"
+      ],
+
+      "emergingSkills": [
+        "generative_ai",
+        "industrial_ai",
+        "digital_twins"
+      ]
+    },
+
+
+    "civil": {
+      "name": "Civil Engineering",
+
+      "prioritySkills": [
+        "systems_thinking",
+        "data_literacy",
+        "sustainability",
+        "automation"
+      ],
+
+      "emergingSkills": [
+        "digital_twins",
+        "climate_analytics",
+        "generative_ai"
+      ]
+    },
+
+
+    "electrical": {
+      "name": "Electrical Engineering",
+
+      "prioritySkills": [
+        "automation",
+        "cybersecurity",
+        "systems_thinking",
+        "data_literacy",
+        "cloud_computing"
+      ],
+
+      "emergingSkills": [
+        "ai_literacy",
+        "digital_twins",
+        "ai_security"
+      ]
+    },
+
+
+    "industrial": {
+      "name": "Industrial Engineering",
+
+      "prioritySkills": [
+        "data_analytics",
+        "automation",
+        "ai_literacy",
+        "systems_thinking",
+        "sustainability"
+      ],
+
+      "emergingSkills": [
+        "industrial_ai",
+        "digital_twins",
+        "generative_ai"
+      ]
+    },
+
+
+    "chemical": {
+      "name": "Chemical Engineering",
+
+      "prioritySkills": [
+        "process_simulation",
+        "data_literacy",
+        "automation",
+        "sustainability"
+      ],
+
+      "emergingSkills": [
+        "digital_twins",
+        "industrial_ai",
+        "climate_analytics"
+      ]
+    },
+
+
+    "environmental": {
+      "name": "Environmental Engineering",
+
+      "prioritySkills": [
+        "climate_analytics",
+        "data_literacy",
+        "sustainability",
+        "systems_thinking"
+      ],
+
+      "emergingSkills": [
+        "generative_ai",
+        "digital_twins"
+      ]
+    },
+
+
+    "biomedical": {
+      "name": "Biomedical Engineering",
+
+      "prioritySkills": [
+        "data_literacy",
+        "ai_literacy",
+        "cybersecurity",
+        "systems_thinking"
+      ],
+
+      "emergingSkills": [
+        "ai_security",
+        "generative_ai",
+        "robotics"
+      ]
+    }
+
+  },
+
+
+  "recommendationFramework": {
+
+    "critical": {
+      "label": "Priority Now",
+      "description": "Capabilities that should be addressed as part of near-term engineering development.",
+      "recommendedHorizon": "0-12 months"
+    },
+
+    "high": {
+      "label": "Build Next",
+      "description": "Capabilities that should become part of structured development pathways.",
+      "recommendedHorizon": "12-24 months"
+    },
+
+    "emerging": {
+      "label": "Experiment",
+      "description": "Capabilities worth piloting through labs, communities or targeted experiments.",
+      "recommendedHorizon": "18-36 months"
+    }
+  }
+}
